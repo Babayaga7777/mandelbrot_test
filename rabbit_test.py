@@ -1,24 +1,33 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
-
-a = np.linspace(0,1,100)
-temp = []
-
 def function(growth_rate,x):
     x = growth_rate*x*(1-x)
     return x
-b = 0.99
-for j in range(0.2,1,10):
-    for i in range(100):
-        temp.append(b)
-        b = function(j,b)
 
+def roundoff(x):
+    return int(x*10**4)/10**4
+
+growth_rate_constants = np.linspace(0,2.22,100)
+
+equilibrium_constants = []
+
+count = 0
+
+for j in growth_rate_constants:
+    
+    b = 0.9
+    temp  = 0.1
+    count += 1
+    while  b != temp:
+
+        temp = b
+
+        b = roundoff(function(j,b))
+    
+
+    equilibrium_constants.append(b)
+    print(count)
+    
         
-    plt.plot(a, temp, color = 'red')
-    # plt.plot(X_train, regressor.predict(X_train), color = 'blue')
-    plt.title('Salary vs Experience (Training set)')
-    plt.xlabel('Years of Experience')
-    plt.ylabel('Salary')
-
+plt.plot(growth_rate_constants,equilibrium_constants)
 plt.show()
